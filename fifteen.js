@@ -9,6 +9,7 @@
 		(1) Multiple backgrounds
 		(2) Game time with some music file
 		(3) Animations and/or transitions
+		(4) One more extra feature...
 	- Function that checks whether we can move a piece into the blank space
 	- Any helper functions
 	- Hover functionality
@@ -16,8 +17,15 @@
 
 // Global variables
 var gameBlock;
+var imageArray = ['tomandjerry.png', 'mario.png', 'scooby.png', 'knd.png'];
+var path = "./img/";
+var imgStr;
 
+// generate the board
 window.onload = function () {
+	// get a random image
+	imgRandom(imageArray);
+
 	// create the individual 15 div blocks
 	for (var i = 0; i < 15; i++) {
 		var block = document.createElement("div");
@@ -39,7 +47,15 @@ window.onload = function () {
 			"left" : "" + (i % 4 * 100) + "px" ,
 			"top"  : "" + (parseInt(i / 4) * 100) + "px",
 			"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
-			"backgroundImage"    : "url('http://assets.stickpng.com/thumbs/593008c73919fe0ee3614dae.png')"
+			"backgroundImage"    : "url('" + imgStr + "')"
 		});	
 	}
 };
+
+// random image generator
+function imgRandom() {
+    for (var i = 0; i < 4; i++) {
+        var rand = imageArray[Math.floor(Math.random() * imageArray.length)];
+        imgStr = "" + path + rand;
+    }
+}
