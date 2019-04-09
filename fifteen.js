@@ -18,7 +18,13 @@
 var gameBlock;
 
 window.onload = function () {
-
+	// create the individual 15 div blocks
+	for (var i = 0; i < 15; i++) {
+		var block = document.createElement("div");
+		block.innerHTML = "" + (i + 1);
+		document.getElementById("gameBoard").appendChild(block);
+	}
+	
 	// retrieve all of the div elements
 	var gameBoard = document.getElementById("gameBoard");
 	gameBlock = gameBoard.getElementsByTagName("div");
