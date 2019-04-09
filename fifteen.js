@@ -162,8 +162,7 @@ function checkBottom(x,y) {
 //uses helper functions above and move piece if true. Takes top , left, and array position of gamePiece.
 function movePosition(x , y ,position) {
 	if(checkRight(x, y)) {
-		
-		gameBlock[position].onclick = gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
+		gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
 		return;
 	}
 	if(checkLeft(x, y)){
