@@ -48,28 +48,27 @@ window.onload = function () {
 			"top"  : "" + (parseInt(i / 4) * 100) + "px",
 			"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
 			"backgroundImage"    : "url('" + imgStr + "')"
-		});	
+		});
+
 		//onclick and hover functions
-		
-		gameBlock[i].onmouseover = function() {
-			checkPosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
-	
-	    }
-		gameBlock[i].onmouseout = function() {
-			this.style.border = "2px solid black";
-			this.style.textDecoration="none";
-	
-	    }
-		gameBlock[i].onclick = function() { 
+	 	$( gameBlock[i] ).mouseover(function() {
+	 		checkPosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
+	 	});
+
+	 	$( gameBlock[i] ).mouseout(function() {
+	 		$( this ).css({
+	 			"border" : "2px solid black",
+	 			"color" : "#000000",
+	 			"textDecoration" : "none"
+	 		});
+	 	});
+
+		$( gameBlock[i] ).click(function() {
 			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
-		
-		}
+		});
 		
 	}
 };
-
-	
-	
 
 // random image generator
 function imgRandom() {
@@ -195,8 +194,11 @@ function checkPosition(x , y , position) {
 		isBlocked= false;	
 	}
 	if(isBlocked == false) {
-		gameBlock[position].style.border = "2px solid #006600";
-		gameBlock[position].style.textDecoration="underline";
-		gameBlock[position].style.textDecorationColor="#006600";
+		
+		$( gameBlock[position] ).css({
+			"border-color" : "red",
+			"text-decoration" : "underline",
+			"color" : "#006600"
+		});
 	}
 }
