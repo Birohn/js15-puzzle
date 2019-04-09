@@ -1,0 +1,57 @@
+h1 {
+	font-family: sans-serif;
+	font-weight: bold;
+	text-align: center;
+}
+
+p.introduction {
+	font-family: sans-serif;
+}
+
+/*
+* Game area is used to contain our game board. It makes things easier when it comes to styling.
+* We will set game area and our game board set to 400px because that is what will contain the 
+* individual blocks each of 100px * 100px. This totals to 16 blocks with one block being empty.
+*/
+/* make sure to center this content */
+#gameArea {
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+}
+
+/* The dimensions of the game board is 400x400. The font-size for the numbers inside the board is 32. */
+#gameBoard {
+	font-size: 32px;
+	height: 400px;
+	width: 400px;
+	padding: 0px;
+	position: relative;
+}
+
+#buttonArea {
+	text-align: center;
+	padding-top: 10px;
+	width: 400px;
+}
+
+/* Each puzzle piece needs to ne 96px x 96px because of the 2px border. We will apply
+* this style to each of the 15 pieces, not the empy one. 
+*/
+div.gameBlock {
+	border: 2px solid black;
+	height: 96px;
+	line-height: 96px;
+	position: absolute;
+	text-align: center;
+	vertical-align: middle;
+	width: 96px;
+}
+
+#validationImages {
+	text-align: right;
+}
+
+#validationImages img {
+	border: none;
+}
