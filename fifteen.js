@@ -4,13 +4,11 @@
 	because window.load() will load once our image has been loaded. 
 
 	TODO:
-	- Add shuffle function (on click)
 	- Implement extra feature(s): 
-		(1) Multiple backgrounds
+		(1) Multiple backgrounds (DONE)
 		(2) Game time with some music file
 		(3) Animations and/or transitions
 		(4) One more extra feature...
-	- Any helper functions
 */
 
 // Global variables
