@@ -10,9 +10,7 @@
 		(2) Game time with some music file
 		(3) Animations and/or transitions
 		(4) One more extra feature...
-	- Function that checks whether we can move a piece into the blank space
 	- Any helper functions
-	- Hover functionality
 */
 
 // Global variables
@@ -20,6 +18,10 @@ var gameBlock;
 var imageArray = ['tomandjerry.png', 'mario.png', 'scooby.png', 'knd.png'];
 var path = "./img/";
 var imgStr;
+
+// shuffle postions
+var valX = "300px";
+var valY = "300px";
 
 // generate the board
 window.onload = function () {
@@ -65,9 +67,78 @@ window.onload = function () {
 
 		$( gameBlock[i] ).click(function() {
 			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
-		});
-		
+		});	
 	}
+
+	// shuffle functionality
+	var shuffle = document.getElementById("shuffle"); 
+	shuffle.onclick = function() 
+	{
+		for (var i=0; i<gameBlock.length; i++) 
+		{
+			var rand = parseInt(Math.random()* 100) %4; //generates a random number for shuffling each piece
+			
+			if (rand == 0)
+			{
+				temp = moveup(valX, valY); 
+
+				if ( temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 1)
+			{
+				temp = movedown(valX, valY);
+
+				if ( temp != -1) 
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 2)
+			{
+				temp = moveleft(valX, valY);
+
+				if ( temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 3)
+			{
+				temp = moveright(valX, valY);
+
+				if (temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+		}
+	};
 };
 
 // random image generator
@@ -201,4 +272,97 @@ function checkPosition(x , y , position) {
 			"color" : "#006600"
 		});
 	}
+}
+
+// shuffle helper functions
+function moveleft(x, y) 
+
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (X > 0)
+	{
+		for (var i = 0; i < gameBlock.length; i++) 
+		{
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y)
+			{
+				return i;
+			} 
+		}
+	}
+	else 
+	{
+		return -1;
+	}
+}
+
+
+
+function moveright (x, y) 
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (X < gameBlock.length)
+	{
+		for (var i =0; i<gameBlock.length; i++){
+
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y) 
+			{
+				return i;
+			}
+		}
+	}
+	else
+	{
+		return -1;
+	} 
+}
+
+
+
+function moveup(x, y) 
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (Y > 0)
+	{
+		for (var i=0; i<gameBlock.length; i++)
+		{
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
+			{
+				return i;
+			}
+		} 
+	}
+	else 
+	{
+		return -1;
+	}
+}
+
+
+
+function movedown (x, y) 
+
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (Y < gameBlock.length)
+	{
+		for (var i=0; i<gameBlock.length; i++)
+		{
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
+			{
+				return i;
+			}
+		}
+	}
+	else
+	{
+		return -1;
+	} 
 }
