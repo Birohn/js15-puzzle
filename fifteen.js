@@ -16,8 +16,9 @@
 
 // Global variables
 var gameBlock;
-var valX;
-var valY;
+var valX = "300px";
+var valY = "300px";
+var temp;
 
 window.onload = function () {
 	// create the individual 15 div blocks
@@ -45,264 +46,164 @@ window.onload = function () {
 		});	
 	}
 
-	var shuffle = document.getElementById("shuffle"); //initializes the shuffle button
-
-	valX = "300px"; 
-	valY = "300px";
-
-	shuffle.onclick = function() //activates whenever the shuffle button is clicked
-
+	var shuffle = document.getElementById("shuffle"); 
+	shuffle.onclick = function() 
 	{
-
-		for (var i=0; i<300; i++) 
-
+		for (var i=0; i<gameBlock.length; i++) 
 		{
-
 			var rand = parseInt(Math.random()* 100) %4; //generates a random number for shuffling each piece
-
+			
 			if (rand == 0)
-
 			{
-
-				var temp = up(valX, valY); 
+				temp = moveup(valX, valY); 
 
 				if ( temp != -1)
-
 				{
-
-					swap(temp);
-
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
 				}
-
 			}
 
 			if (rand == 1)
-
 			{
-
-				var temp = down(valX, valY);
+				temp = movedown(valX, valY);
 
 				if ( temp != -1) 
-
 				{
-
-					swap(temp);
-
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
 				}
-
 			}
-
-
 
 			if (rand == 2)
-
 			{
-
-				var temp = left(valX, valY);
+				temp = moveleft(valX, valY);
 
 				if ( temp != -1)
-
 				{
-
-					swap(temp);
-
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
 				}
-
 			}
-
 
 			if (rand == 3)
-
 			{
-
-				var temp = right(valX, valY);
+				temp = moveright(valX, valY);
 
 				if (temp != -1)
-
 				{
-
-					swap(temp);
-
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
 				}
-
 			}
-
 		}
-
 	};
-
 };
 
-
-function swap (step) //moves the puzzle piece by switching position with an empty space
-{
-
-	var temp = gameBlock[step].style.top;
-
-	gameBlock[step].style.top = valY;
-
-	valY = temp;
-
-	temp = gameBlock[step].style.left;
-
-	gameBlock[step].style.left = valX;
-
-	valX = temp;
-
-}
-
-function left(x, y) //calculates how far to the left a puzzlepiece should position
+function moveleft(x, y) 
 
 {
+	var X = parseInt(x);
+	var Y = parseInt(y);
 
-	var cordX = parseInt(x);
-
-	var cordY = parseInt(y);
-
-
-
-	if (cordX > 0)
-
+	if (X > 0)
 	{
-
 		for (var i = 0; i < gameBlock.length; i++) 
-
 		{
-
-			if (parseInt(gameBlock[i].style.left) + 100 == cordX && parseInt(gameBlock[i].style.top) == cordY)
-
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y)
 			{
-
 				return i;
-
 			} 
-
 		}
-
 	}
-
 	else 
-
 	{
-
 		return -1;
-
 	}
-
 }
 
 
 
-function right (x, y) //calculates how far to the right a puzzlepiece should position
+function moveright (x, y) 
 {
+	var X = parseInt(x);
+	var Y = parseInt(y);
 
-	var cordX = parseInt(x);
-
-	var cordY = parseInt(y);
-
-	if (cordX < 300)
-
+	if (X < gameBlock.length)
 	{
-
 		for (var i =0; i<gameBlock.length; i++){
 
-			if (parseInt(gameBlock[i].style.left) - 100 == cordX && parseInt(gameBlock[i].style.top) == cordY) 
-
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y) 
 			{
-
 				return i;
-
 			}
-
 		}
-
 	}
-
 	else
-
 	{
-
 		return -1;
-
 	} 
-
 }
 
 
 
-function up(x, y) //calculates how far up a puzzlepiece should position
+function moveup(x, y) 
 {
+	var X = parseInt(x);
+	var Y = parseInt(y);
 
-	var cordX = parseInt(x);
-
-	var cordY = parseInt(y);
-
-	if (cordY > 0)
-
+	if (Y > 0)
 	{
-
 		for (var i=0; i<gameBlock.length; i++)
-
 		{
-
-			if (parseInt(gameBlock[i].style.top) + 100 == cordY && parseInt(gameBlock[i].style.left) == cordX) 
-
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
 			{
-
 				return i;
-
 			}
-
 		} 
-
 	}
-
 	else 
-
 	{
-
 		return -1;
-
 	}
-
 }
 
 
 
-function down (x, y) //calculates how far down a puzzlepiece should position
+function movedown (x, y) 
 
 {
+	var X = parseInt(x);
+	var Y = parseInt(y);
 
-	var cordX = parseInt(x);
-
-	var cordY = parseInt(y);
-
-	if (cordY < 300)
-
+	if (Y < gameBlock.length)
 	{
-
 		for (var i=0; i<gameBlock.length; i++)
-
 		{
-
-			if (parseInt(gameBlock[i].style.top) - 100 == cordY && parseInt(gameBlock[i].style.left) == cordX) 
-
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
 			{
-
 				return i;
-
 			}
-
 		}
-
 	}
-
 	else
-
 	{
-
 		return -1;
-
 	} 
-
 }
