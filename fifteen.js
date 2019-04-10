@@ -23,6 +23,9 @@ var imgStr;
 var valX = "300px";
 var valY = "300px";
 
+// image selector varaible
+var select = document.getElementById("images");
+
 // generate the board
 window.onload = function () {
 	// get a random image
@@ -139,6 +142,17 @@ window.onload = function () {
 			}
 		}
 	};
+
+	// image selection 
+	$( "#showValue" ).click(function() {
+		imgStr = select.value;
+		for (var i = 0; i < gameBlock.length; i++) {
+			$( gameBlock[i] ).css({
+				"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
+				"backgroundImage"    : "url('" + imgStr + "')"
+			});
+		}
+	});
 };
 
 // random image generator
@@ -366,3 +380,4 @@ function movedown (x, y)
 		return -1;
 	} 
 }
+
