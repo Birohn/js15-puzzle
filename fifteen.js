@@ -4,15 +4,11 @@
 	because window.load() will load once our image has been loaded. 
 
 	TODO:
-	- Add shuffle function (on click)
 	- Implement extra feature(s): 
-		(1) Multiple backgrounds
+		(1) Multiple backgrounds (DONE)
 		(2) Game time with some music file
 		(3) Animations and/or transitions
 		(4) One more extra feature...
-	- Function that checks whether we can move a piece into the blank space
-	- Any helper functions
-	- Hover functionality
 */
 
 // Global variables
@@ -20,6 +16,13 @@ var gameBlock;
 var imageArray = ['tomandjerry.png', 'mario.png', 'scooby.png', 'knd.png'];
 var path = "./img/";
 var imgStr;
+
+// shuffle postions
+var valX = "300px";
+var valY = "300px";
+
+// image selector varaible
+var select = document.getElementById("images");
 
 // generate the board
 window.onload = function () {
@@ -48,28 +51,107 @@ window.onload = function () {
 			"top"  : "" + (parseInt(i / 4) * 100) + "px",
 			"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
 			"backgroundImage"    : "url('" + imgStr + "')"
-		});	
-		//onclick and hover functions
-		
-		gameBlock[i].onmouseover = function() {
-			checkPosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
-	
-	    }
-		gameBlock[i].onmouseout = function() {
-			this.style.border = "2px solid black";
-			this.style.textDecoration="none";
-	
-	    }
-		gameBlock[i].onclick = function() { 
-			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
-		
-		}
-		
-	}
-};
+		});
 
-	
-	
+		//onclick and hover functions
+	 	$( gameBlock[i] ).mouseover(function() {
+	 		checkPosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
+	 	});
+
+	 	$( gameBlock[i] ).mouseout(function() {
+	 		$( this ).css({
+	 			"border" : "2px solid black",
+	 			"color" : "#000000",
+	 			"textDecoration" : "none"
+	 		});
+	 	});
+
+		$( gameBlock[i] ).click(function() {
+			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
+		});	
+	}
+
+	// shuffle functionality
+	var shuffle = document.getElementById("shuffle"); 
+	shuffle.onclick = function() 
+	{
+		for (var i=0; i<gameBlock.length; i++) 
+		{
+			var rand = parseInt(Math.random()* 100) %4; //generates a random number for shuffling each piece
+			
+			if (rand == 0)
+			{
+				temp = moveup(valX, valY); 
+
+				if ( temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 1)
+			{
+				temp = movedown(valX, valY);
+
+				if ( temp != -1) 
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 2)
+			{
+				temp = moveleft(valX, valY);
+
+				if ( temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+
+			if (rand == 3)
+			{
+				temp = moveright(valX, valY);
+
+				if (temp != -1)
+				{
+					temp = gameBlock[i].style.top;
+					gameBlock[i].style.top = valY;
+					valY = temp;
+					temp = gameBlock[i].style.left;
+					gameBlock[i].style.left = valX;
+					valX = temp;
+				}
+			}
+		}
+	};
+
+	// image selection 
+	$( "#showValue" ).click(function() {
+		imgStr = select.value;
+		for (var i = 0; i < gameBlock.length; i++) {
+			$( gameBlock[i] ).css({
+				"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
+				"backgroundImage"    : "url('" + imgStr + "')"
+			});
+		}
+	});
+};
 
 // random image generator
 function imgRandom() {
@@ -195,8 +277,105 @@ function checkPosition(x , y , position) {
 		isBlocked= false;	
 	}
 	if(isBlocked == false) {
-		gameBlock[position].style.border = "2px solid #006600";
-		gameBlock[position].style.textDecoration="underline";
-		gameBlock[position].style.textDecorationColor="#006600";
+		
+		$( gameBlock[position] ).css({
+			"border-color" : "red",
+			"text-decoration" : "underline",
+			"color" : "#006600"
+		});
 	}
 }
+
+// shuffle helper functions
+function moveleft(x, y) 
+
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (X > 0)
+	{
+		for (var i = 0; i < gameBlock.length; i++) 
+		{
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y)
+			{
+				return i;
+			} 
+		}
+	}
+	else 
+	{
+		return -1;
+	}
+}
+
+
+
+function moveright (x, y) 
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (X < gameBlock.length)
+	{
+		for (var i =0; i<gameBlock.length; i++){
+
+			if (parseInt(gameBlock[i].style.left) == X && parseInt(gameBlock[i].style.top) == Y) 
+			{
+				return i;
+			}
+		}
+	}
+	else
+	{
+		return -1;
+	} 
+}
+
+
+
+function moveup(x, y) 
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (Y > 0)
+	{
+		for (var i=0; i<gameBlock.length; i++)
+		{
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
+			{
+				return i;
+			}
+		} 
+	}
+	else 
+	{
+		return -1;
+	}
+}
+
+
+
+function movedown (x, y) 
+
+{
+	var X = parseInt(x);
+	var Y = parseInt(y);
+
+	if (Y < gameBlock.length)
+	{
+		for (var i=0; i<gameBlock.length; i++)
+		{
+			if (parseInt(gameBlock[i].style.top) == Y && parseInt(gameBlock[i].style.left) == X) 
+			{
+				return i;
+			}
+		}
+	}
+	else
+	{
+		return -1;
+	} 
+}
+
