@@ -260,6 +260,9 @@ var numMoves =0;
 //uses helper functions above and move piece if true. Takes top , left, and array position of gamePiece.
 
 function movePosition(x , y ,position) {
+	if(isInTransit == true) {
+		return;
+	}
 	if(checkRight(x, y)) {
 		//gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
 		animationRight(position);
@@ -285,17 +288,18 @@ function movePosition(x , y ,position) {
 		return;
 	}
 }
+var isInTransit= false;
 //animation functions for movement of gamePieces into their new positions
 function animationUp(position) {
 	var currentPosition = 0;
 	var frameByFrame= setInterval(frame, 10);
 	function frame() {
 		if(currentPosition ==25) {
-			
+			isInTransit= false;
 			clearInterval(frameByFrame);
 		}
 		else {
-			
+			isInTransit= true;
 			currentPosition++;
 			gameBlock[position].style.top = parseInt(gameBlock[position].style.top) - 4 +"px";
 		}
@@ -307,11 +311,11 @@ function animationDown(position) {
 	var frameByFrame= setInterval(frame, 10);
 	function frame() {
 		if(currentPosition ==25) {
-			
+			isInTransit= false;
 			clearInterval(frameByFrame);
 		}
 		else {
-			
+			isInTransit= true;
 			currentPosition++;
 			gameBlock[position].style.top = parseInt(gameBlock[position].style.top) + 4 +"px";
 		}
@@ -323,11 +327,11 @@ function animationLeft(position) {
 	var frameByFrame= setInterval(frame, 10);
 	function frame() {
 		if(currentPosition ==25) {
-			
+			isInTransit= false;
 			clearInterval(frameByFrame);
 		}
 		else {
-			
+			isInTransit= true;
 			currentPosition++;
 			gameBlock[position].style.left = parseInt(gameBlock[position].style.left) - 4 +"px";
 		}
@@ -339,11 +343,11 @@ function animationRight(position) {
 	var frameByFrame= setInterval(frame, 10);
 	function frame() {
 		if(currentPosition ==25) {
-			
+			isInTransit= false;
 			clearInterval(frameByFrame);
 		}
 		else {
-			
+			isInTransit= true;
 			currentPosition++;
 			gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 4 +"px";
 		}
