@@ -21,11 +21,16 @@ var imgStr;
 var valX = "300px";
 var valY = "300px";
 
+//Background music variables
+var backgroundSound= new Audio("audio/tetris-gameboy-02.mp3");
+
+
 // image selector varaible
 var select = document.getElementById("images");
 
 // generate the board
 window.onload = function () {
+	
 	// get a random image
 	imgRandom(imageArray);
 
@@ -70,7 +75,12 @@ window.onload = function () {
 			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
 		});	
 	}
-
+	//background audio play and loop
+	backgroundSound.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	},false);
+	backgroundSound.play();
 	// shuffle functionality
 	var shuffle = document.getElementById("shuffle"); 
 	shuffle.onclick = function() 
@@ -139,8 +149,11 @@ window.onload = function () {
 				}
 			}
 		}
+		
 	};
-
+	
+	//start timer on load
+	setInterval(timer, 1000);
 	// image selection 
 	$( "#showValue" ).click(function() {
 		imgStr = select.value;
@@ -151,6 +164,7 @@ window.onload = function () {
 			});
 		}
 	});
+	
 };
 
 // random image generator
@@ -241,24 +255,100 @@ function checkBottom(x,y) {
 		return 0;
 	}
 }
+//keeps tracks of number of moves
+var numMoves =0;
 //uses helper functions above and move piece if true. Takes top , left, and array position of gamePiece.
+
 function movePosition(x , y ,position) {
 	if(checkRight(x, y)) {
-		gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
+		//gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
+		animationRight(position);
+		document.getElementById("numMovesLabel").innerHTML=++numMoves;
 		return;
 	}
 	if(checkLeft(x, y)){
-		gameBlock[position].style.left = parseInt(gameBlock[position].style.left) - 100 +"px";
+		//gameBlock[position].style.left = parseInt(gameBlock[position].style.left) - 100 +"px";
+		animationLeft(position);
+		document.getElementById("numMovesLabel").innerHTML=++numMoves;
 		return;
 	}
 	if(checkTop(x, y)) {
-		gameBlock[position].style.top = parseInt(gameBlock[position].style.top) -100 +"px";
+		//gameBlock[position].style.top = parseInt(gameBlock[position].style.top) -100 +"px";
+		animationUp(position);
+		document.getElementById("numMovesLabel").innerHTML=++numMoves;
 		return;
 	}
 	if(checkBottom(x, y)) {
-		gameBlock[position].style.top = parseInt(gameBlock[position].style.top) +100 +"px";
+		//gameBlock[position].style.top = parseInt(gameBlock[position].style.top) +100 +"px";
+		animationDown(position);
+		document.getElementById("numMovesLabel").innerHTML=++numMoves;
 		return;
 	}
+}
+//animation functions for movement of gamePieces into their new positions
+function animationUp(position) {
+	var currentPosition = 0;
+	var frameByFrame= setInterval(frame, 10);
+	function frame() {
+		if(currentPosition ==25) {
+			
+			clearInterval(frameByFrame);
+		}
+		else {
+			
+			currentPosition++;
+			gameBlock[position].style.top = parseInt(gameBlock[position].style.top) - 4 +"px";
+		}
+	}
+	
+}
+function animationDown(position) {
+	var currentPosition = 0;
+	var frameByFrame= setInterval(frame, 10);
+	function frame() {
+		if(currentPosition ==25) {
+			
+			clearInterval(frameByFrame);
+		}
+		else {
+			
+			currentPosition++;
+			gameBlock[position].style.top = parseInt(gameBlock[position].style.top) + 4 +"px";
+		}
+	}
+	
+}
+function animationLeft(position) {
+	var currentPosition = 0;
+	var frameByFrame= setInterval(frame, 10);
+	function frame() {
+		if(currentPosition ==25) {
+			
+			clearInterval(frameByFrame);
+		}
+		else {
+			
+			currentPosition++;
+			gameBlock[position].style.left = parseInt(gameBlock[position].style.left) - 4 +"px";
+		}
+	}
+	
+}
+function animationRight(position) {
+	var currentPosition = 0;
+	var frameByFrame= setInterval(frame, 10);
+	function frame() {
+		if(currentPosition ==25) {
+			
+			clearInterval(frameByFrame);
+		}
+		else {
+			
+			currentPosition++;
+			gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 4 +"px";
+		}
+	}
+	
 }
 //underline and highlight pieces that are moveable. Takes top, left , and array position of gamePiece.
 function checkPosition(x , y , position) {
@@ -284,6 +374,24 @@ function checkPosition(x , y , position) {
 			"color" : "#006600"
 		});
 	}
+}
+//timer functions
+var minutes = document.getElementById("minutesLabel");
+var seconds =document.getElementById("secondsLabel");
+var timeCount = 0;
+function timer() {
+	++timeCount;
+	seconds.innerHTML=formatTime(timeCount % 60);
+	minutes.innerHTML=formatTime(parseInt(timeCount / 60));
+	
+}
+function formatTime(time) {
+	let formatString = time +"";
+	if(formatString.length< 2)
+		return "0" + formatString;
+	else
+		return formatString;
+	
 }
 
 // shuffle helper functions
