@@ -207,3 +207,35 @@ function movedown (x, y)
 		return -1;
 	} 
 }
+
+function endGame()
+
+{
+	var msg = "You win!";
+	var ifTrue = true;
+
+	for (var i = 0; i < gameBlock.length; i++) //for each puzzle piece 
+	{
+
+		var top = parseInt(gamePiece[i].style.top);
+
+		var left = parseInt(gamePiece[i].style.left);
+
+
+		if (left != (i%4*100) || top != parseInt(i/4)*100) //checks if each piece matches its left and top position
+
+		{
+
+			ifTrue = false;
+
+			break;
+
+			document.getElementById("formsg").innerHTML = msg;
+
+		}
+
+	}
+
+	return ifTrue;
+
+}
