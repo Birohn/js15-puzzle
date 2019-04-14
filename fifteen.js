@@ -36,7 +36,8 @@ window.onload = function () {
 	
 	// get a random image
 	imgRandom(imageArray);
-
+	//hide buttonWin
+	$("#buttonWin").hide();
 	// create the individual 15 div blocks
 	for (var i = 0; i < 15; i++) {
 		var block = document.createElement("div");
@@ -78,7 +79,8 @@ window.onload = function () {
 			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
 		});	
 	}
-
+	//start timer on load
+	setInterval(timer, 1000);
 	//background audio play and loop
 	backgroundSound.addEventListener('ended', function() {
 		this.currentTime = 0;
@@ -155,9 +157,9 @@ window.onload = function () {
 			}
 		}
 
+	//show the win button
+	 showButton();
 	
-	//start timer on load
-	setInterval(timer, 1000);
 	};
 	// image selection 
 	$( "#showValue" ).click(function() {
@@ -271,26 +273,31 @@ function movePosition(x , y ,position) {
 		//gameBlock[position].style.left = parseInt(gameBlock[position].style.left) + 100 +"px";
 		animationRight(position);
 		document.getElementById("numMovesLabel").innerHTML=++numMoves;
+		
 		return;
 	}
 	if(checkLeft(x, y)){
 		//gameBlock[position].style.left = parseInt(gameBlock[position].style.left) - 100 +"px";
 		animationLeft(position);
 		document.getElementById("numMovesLabel").innerHTML=++numMoves;
+		
 		return;
 	}
 	if(checkTop(x, y)) {
 		//gameBlock[position].style.top = parseInt(gameBlock[position].style.top) -100 +"px";
 		animationUp(position);
 		document.getElementById("numMovesLabel").innerHTML=++numMoves;
+		
 		return;
 	}
 	if(checkBottom(x, y)) {
 		//gameBlock[position].style.top = parseInt(gameBlock[position].style.top) +100 +"px";
 		animationDown(position);
 		document.getElementById("numMovesLabel").innerHTML=++numMoves;
+		
 		return;
 	}
+	
 }
 var isInTransit= false;
 //animation functions for movement of gamePieces into their new positions
@@ -506,20 +513,20 @@ function endGame()
 	for (var i = 0; i < gameBlock.length; i++) //for each puzzle piece 
 	{
 
-		var top = parseInt(gamePiece[i].style.top);
+		var top = parseInt(gameBlock[i].style.top);
 
-		var left = parseInt(gamePiece[i].style.left);
+		var left = parseInt(gameBlock[i].style.left);
 
 
-		if (left != (i%4*100) || top != parseInt(i/4)*100) //checks if each piece matches its left and top position
+		if (left != (i%4*100) || top != parseInt((i/4))*100) //checks if each piece matches its left and top position
 
 		{
-
+			console.log(gameBlock[i]);
 			ifTrue = false;
 
 			break;
 
-			document.getElementById("formsg").innerHTML = msg;
+			//document.getElementById("formsg").innerHTML = msg;
 
 		}
 
@@ -528,4 +535,30 @@ function endGame()
 	return ifTrue;
 
 }
-
+//check to see if there is a win
+function checkWinGame() {
+	var msg= "You Win!"
+	if(endGame()) {
+		clearInterval(timer());
+		document.getElementById("formsg").innerHTML = msg +" Time: " + document.getElementById("minutesLabel").innerHTML + ":" + document.getElementById("secondsLabel").innerHTML + " Moves: " + numMoves;
+		$("#buttonWin").hide();
+		backgroundSound.pause();
+		var winSound = new Audio("audio/grunt-birthday-party.mp3");
+		winSound.play();
+		var img="img/win.png";
+		for (var i = 0; i < gameBlock.length; i++) {
+			$( gameBlock[i] ).css({
+				"backgroundPosition" : "-" + (i % 4 * 100) + "px" + " " + "-" + (parseInt(i / 4) * 100) + "px",
+				"backgroundImage"    : "url('" + img + "')"
+			});
+		}
+	}
+	else {
+		document.getElementById("formsg").innerHTML = "You haven't won yet..";
+	}
+	
+}
+//show the check win button
+function showButton() {
+	$("#buttonWin").show();
+}
