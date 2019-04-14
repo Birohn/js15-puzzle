@@ -8,7 +8,7 @@
 		(1) Multiple backgrounds (DONE)
 		(2) Game time with some music file
 		(3) Animations and/or transitions
-		(4) One more extra feature...
+		(4) End-Of-Game Notification
 */
 
 // Global variables
@@ -299,6 +299,7 @@ function movePosition(x , y ,position) {
 	}
 	
 }
+//checks to see if piece is in movement
 var isInTransit= false;
 //animation functions for movement of gamePieces into their new positions
 function animationUp(position) {
@@ -540,8 +541,10 @@ function checkWinGame() {
 	var msg= "You Win!"
 	if(endGame()) {
 		clearInterval(timer());
+		document.getElementById("formsg").style.color="red";
 		document.getElementById("formsg").innerHTML = msg +" Time: " + document.getElementById("minutesLabel").innerHTML + ":" + document.getElementById("secondsLabel").innerHTML + " Moves: " + numMoves;
 		$("#buttonWin").hide();
+		$("#shuffle").hide();
 		backgroundSound.pause();
 		var winSound = new Audio("audio/grunt-birthday-party.mp3");
 		winSound.play();
