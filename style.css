@@ -48,6 +48,11 @@ div.gameBlock {
 	width: 96px;
 }
 
+#selectBox {
+	border: 1px solid black;
+	width: 25%;
+}
+
 #validationImages {
 	text-align: right;
 }
