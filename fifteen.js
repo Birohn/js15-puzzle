@@ -13,6 +13,9 @@
 
 // Global variables
 var gameBlock;
+
+var temp;
+
 var imageArray = ['tomandjerry.png', 'mario.png', 'scooby.png', 'knd.png'];
 var path = "./img/";
 var imgStr;
@@ -75,6 +78,7 @@ window.onload = function () {
 			movePosition(parseInt(this.style.top), parseInt(this.style.left),this.innerHTML -1);
 		});	
 	}
+
 	//background audio play and loop
 	backgroundSound.addEventListener('ended', function() {
 		this.currentTime = 0;
@@ -82,6 +86,7 @@ window.onload = function () {
 	},false);
 	backgroundSound.play();
 	// shuffle functionality
+
 	var shuffle = document.getElementById("shuffle"); 
 	shuffle.onclick = function() 
 	{
@@ -149,11 +154,11 @@ window.onload = function () {
 				}
 			}
 		}
-		
-	};
+
 	
 	//start timer on load
 	setInterval(timer, 1000);
+	};
 	// image selection 
 	$( "#showValue" ).click(function() {
 		imgStr = select.value;
@@ -164,8 +169,7 @@ window.onload = function () {
 			});
 		}
 	});
-	
-};
+}
 
 // random image generator
 function imgRandom() {
@@ -399,6 +403,7 @@ function formatTime(time) {
 }
 
 // shuffle helper functions
+
 function moveleft(x, y) 
 
 {
@@ -489,5 +494,38 @@ function movedown (x, y)
 	{
 		return -1;
 	} 
+}
+
+
+function endGame()
+
+{
+	var msg = "You win!";
+	var ifTrue = true;
+
+	for (var i = 0; i < gameBlock.length; i++) //for each puzzle piece 
+	{
+
+		var top = parseInt(gamePiece[i].style.top);
+
+		var left = parseInt(gamePiece[i].style.left);
+
+
+		if (left != (i%4*100) || top != parseInt(i/4)*100) //checks if each piece matches its left and top position
+
+		{
+
+			ifTrue = false;
+
+			break;
+
+			document.getElementById("formsg").innerHTML = msg;
+
+		}
+
+	}
+
+	return ifTrue;
+
 }
 
